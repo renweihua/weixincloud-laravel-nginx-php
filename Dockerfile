@@ -1,6 +1,6 @@
 # 二开推荐阅读[如何提高项目构建效率](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/scene/build/speed.html)
 # 选择构建用基础镜像（选择原则：在包含所有用到的依赖前提下尽可能体积小）。如需更换，请到[dockerhub官方仓库](https://hub.docker.com/_/php?tab=tags)自行选择后替换。
-FROM alpine:3.16
+FROM alpine:3.13
 
 # 容器默认时区为UTC，如需使用上海时间请启用以下时区设置命令
 # RUN apk add tzdata && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo Asia/Shanghai > /etc/timezone
@@ -17,7 +17,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     php7-fileinfo \
     php7-json \
     php7-mbstring \
-    php7-openSSL \
+    php7-openssl \
     php7-xml \
     php7-tokenizer \
     php7-ctype \
@@ -26,7 +26,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     php7-pdo_mysql \
     php7-fpm \
     php7-curl \
-    php7-redis \   
+    php7-redis \
     nginx \
     && rm -f /var/cache/apk/*
 
@@ -41,7 +41,7 @@ RUN cp /home/conf/nginx.conf /etc/nginx/conf.d/default.conf \
     && cp /home/conf/fpm.conf /etc/php7/php-fpm.d/www.conf \
     && cp /home/conf/php.ini /etc/php7/php.ini \
     && mkdir -p /run/nginx \
-    && chmod -R 777 /home/runtime \
+    && chmod -R 777 /home/laravel/storage \
     && mv /usr/sbin/php-fpm7 /usr/sbin/php-fpm
 
 
