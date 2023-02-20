@@ -1,11 +1,8 @@
 # weixincloud-laravel-nginx-php
 微信云托管 laravel+nginx+php 模版
 
-## 快速开始
-前往 [微信云托管快速开始页面](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/basic/guide.html)，选择相应语言的模板，根据引导完成部署。
-
 ## 本地调试
-下载代码在本地调试，请参考[微信云托管本地调试指南](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/guide/debug/)。
+下载代码在本地调试，请参考[微信云托管本地调试指南](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/guide/debug/)
 
 ## 目录结构说明
 ~~~
@@ -41,7 +38,8 @@
 - MYSQL_DATABASE
 - MYSQL_USERNAME
 - MYSQL_PASSWORD
-  以上四个变量的值请按实际情况填写。如果使用云托管内MySQL，可以在控制台MySQL页面获取相关信息。
+
+以上四个变量的值请按实际情况填写。如果使用云托管内MySQL，可以在控制台MySQL页面获取相关信息。
 
 ## laravel项目调整兼容的文件
 - config/database.php
