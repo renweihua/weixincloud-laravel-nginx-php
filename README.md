@@ -47,6 +47,9 @@
 - config/database.php
   - 数据库配置支持云托管的环境变量与laravel目录下的.env文件配置
 
+## conf/nginx.conf
+  监听的端口，需要在`云管家` => 开发辅助 => proxy 配置下设置`开启`，且为对应的转发端口
+
 ## License
 
 [MIT](./LICENSE)

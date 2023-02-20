@@ -6,7 +6,6 @@ php-fpm -D
 # 关闭后台启动，hold住进程
 nginx -g 'daemon off;' &
 
-#php /home/laravel/artisan serve --port 9000 --host localhost &
 # 运行`微信云托管`
 cd /wxcloudrun-wxcomponent
 ./main
