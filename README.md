@@ -48,6 +48,10 @@
 ## conf/nginx.conf
   监听的端口，需要在`云管家` => 开发辅助 => proxy 配置下设置`开启`，且为对应的转发端口
 
+## `服务商微管家`后台配置
+* 开发辅助 => proxy 配置 => 设置`转发端口`
+* 系统关联 => Secret与密码管理 => 设置`第三方 Secret`
+
 ## 开发配置
 * [消息转发配置](https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/product/wxcloudrun_dev.html#%E4%BA%8C%E3%80%81%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E9%85%8D%E7%BD%AE)
   * 转发推送至授权事件 URL 的信息
