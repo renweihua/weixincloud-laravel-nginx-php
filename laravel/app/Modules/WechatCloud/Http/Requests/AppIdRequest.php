@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\WechatCloudComponent\Http\Requests;
+namespace App\Modules\WechatCloud\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

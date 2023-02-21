@@ -6,8 +6,8 @@ require('laravel-mix-merge-manifest');
 
 mix.setPublicPath('../../public').mergeManifest();
 
-mix.js(__dirname + '/Resources/assets/js/app.js', 'js/wechatcloudcomponent.js')
-    .sass( __dirname + '/Resources/assets/sass/app.scss', 'css/wechatcloudcomponent.css');
+mix.js(__dirname + '/Resources/assets/js/app.js', 'js/wechatcloud.js')
+    .sass( __dirname + '/Resources/assets/sass/app.scss', 'css/wechatcloud.css');
 
 if (mix.inProduction()) {
     mix.version();

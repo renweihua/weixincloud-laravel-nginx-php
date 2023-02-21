@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Modules\WechatCloudComponent\Http\Controllers;
+namespace App\Modules\WechatCloud\Http\Controllers;
 
 use App\Constants\HttpStatus;
-use App\Modules\WechatCloudComponent\Http\Requests\AppIdRequest;
+use App\Modules\WechatCloud\Http\Requests\AppIdRequest;
 use App\Traits\Json;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class WechatCloudComponentController extends Controller
+class WechatCloudController extends Controller
 {
     use Json;
 

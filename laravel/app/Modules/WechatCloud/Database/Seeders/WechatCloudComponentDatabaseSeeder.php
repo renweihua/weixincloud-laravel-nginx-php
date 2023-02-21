@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\WechatCloudComponent\Database\Seeders;
+namespace App\Modules\WechatCloud\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class WechatCloudComponentDatabaseSeeder extends Seeder
+class WechatCloudDatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.

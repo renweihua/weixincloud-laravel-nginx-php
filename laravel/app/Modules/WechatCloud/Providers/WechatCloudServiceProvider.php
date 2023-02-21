@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Modules\WechatCloudComponent\Providers;
+namespace App\Modules\WechatCloud\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
-class WechatCloudComponentServiceProvider extends ServiceProvider
+class WechatCloudServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'WechatCloudComponent';
+    protected $moduleName = 'WechatCloud';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'wechatcloudcomponent';
+    protected $moduleNameLower = 'wechatcloud';
 
     /**
      * Boot the application events.

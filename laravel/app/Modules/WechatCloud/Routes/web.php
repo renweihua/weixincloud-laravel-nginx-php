@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('wechatcloudcomponent')->group(function() {
-    Route::get('/', 'WechatCloudComponentController@index');
-});
+// Route::prefix('wechatcloud')->group(function() {
+//     Route::get('/', 'WechatCloudController@index');
+// });
