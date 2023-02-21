@@ -1,0 +1,13 @@
+{
+    "name": "WechatCloudComponent",
+    "alias": "wechatcloudcomponent",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Modules\\WechatCloudComponent\\Providers\\WechatCloudComponentServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
