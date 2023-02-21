@@ -1,4 +1,4 @@
-@extends('WechatCloud::layouts.master')
+@extends('wechatcloud::layouts.master')
 
 @section('content')
     <h1>Hello World</h1>

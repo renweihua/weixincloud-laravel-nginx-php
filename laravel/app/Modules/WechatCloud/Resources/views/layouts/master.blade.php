@@ -7,7 +7,7 @@
         <title>Module WechatCloud</title>
 
        {{-- Laravel Mix - CSS File --}}
-        {{-- <link rel="stylesheet" href="{{ mix('css/wechatcloud.css') }}"> --}}
+       {{-- <link rel="stylesheet" href="{{ mix('css/wechatcloud.css') }}"> --}}
 
     </head>
     <body>

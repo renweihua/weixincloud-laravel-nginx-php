@@ -13,6 +13,7 @@ class WechatCloudController extends Controller
 {
     use Json;
 
+    // 云管理服务的内网端口
     public $server = 'http://127.0.0.1:8081';
 
     // 第三方平台的component_access_token
