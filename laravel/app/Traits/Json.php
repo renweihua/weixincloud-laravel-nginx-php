@@ -28,6 +28,7 @@ trait Json
         $data['data'] = $data['data'] ?? [];
         $data['msg'] = $data['msg'] ?? (empty($data['status']) ? '' : 'success');
         $data['execution_time'] = microtime(true) - LARAVEL_START;
+        $data['http_status'] = $this->http_status;
 
         // JSON_UNESCAPED_UNICODE 256：Json不要编码Unicode
         return response()->json($data, $data['http_status'], $header, 256);
