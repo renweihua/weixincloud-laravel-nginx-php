@@ -17,4 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('wechatcloudcomponent')->group(function() {
     // 第三方平台的component_access_token
     Route::get('/get-component-access-token', 'WechatCloudComponentController@getComponentAccessToken');
+    // 获取小程序的授权帐号令牌 authorizer_access_token
+    Route::get('/get-authorizer-access-token', 'WechatCloudComponentController@getAuthorizerAccessToken');
 });
