@@ -17,10 +17,6 @@ Route::get('/laravel', function () {
     return view('welcome');
 });
 
-Route::get('/phpinfo', function () {
-    return phpinfo();
-});
-
 Route::get('/counter', function () {
     return view('counter');
 });
@@ -30,10 +26,3 @@ Route::get('/api/count', [CounterController::class, 'getCount']);
 
 // 更新计数，自增或者清零
 Route::post('/api/count', [CounterController::class, 'updateCount']);
-
-Route::get('/component-access-token', function () {
-    $client = new \GuzzleHttp\Client;
-    $response = $client->get('http://127.0.0.1:8081/inner/component-access-token');
-    var_dump($response->getStatusCode());
-    var_dump($response->getBody()->getContents());
-});

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/wechatcloudcomponent', function (Request $request) {
-    return $request->user();
+Route::prefix('wechatcloudcomponent')->group(function() {
+    // 第三方平台的component_access_token
+    Route::get('/get-component-access-token', 'WechatCloudComponentController@getComponentAccessToken');
 });
