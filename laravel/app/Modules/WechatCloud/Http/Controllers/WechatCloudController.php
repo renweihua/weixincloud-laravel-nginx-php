@@ -30,7 +30,10 @@ class WechatCloudController extends Controller
             return $this->errorJson($result->errorMsg);
         }
 
-        return $this->successJson($result->data->token, $result->errorMsg);
+        return $this->successJson([
+            'component_appid' => getenv('WX_APPID'),
+            'component_access_token' => $result->data->token,
+        ], $result->errorMsg, );
     }
 
     // 获取小程序的授权帐号令牌 authorizer_access_token
@@ -39,7 +42,8 @@ class WechatCloudController extends Controller
         $client = new \GuzzleHttp\Client([
             'base_uri' => $this->server
         ]);
-        $response = $client->get('/inner/authorizer-access-token?appid=' . $request->input('app_id'));
+        $app_id = $request->input('app_id');
+        $response = $client->get('/inner/authorizer-access-token?appid=' . $app_id);
 
         $result = json_decode($response->getBody()->getContents());
 
@@ -47,6 +51,9 @@ class WechatCloudController extends Controller
             return $this->errorJson($result->errorMsg);
         }
 
-        return $this->successJson($result->data->token, $result->errorMsg);
+        return $this->successJson([
+            'authorizer_appid' => $app_id,
+            'authorizer_access_token' => $result->data->token,
+        ], $result->errorMsg);
     }
 }
