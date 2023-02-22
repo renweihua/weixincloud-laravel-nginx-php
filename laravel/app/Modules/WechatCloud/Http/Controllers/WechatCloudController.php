@@ -26,14 +26,14 @@ class WechatCloudController extends Controller
 
         $result = json_decode($response->getBody()->getContents());
 
-        if ($response->getStatusCode() != HttpStatus::SUCCESS){
+        if ($response->getStatusCode() != HttpStatus::SUCCESS || $result->code != 0){
             return $this->errorJson($result->errorMsg);
         }
 
         return $this->successJson([
             'component_appid' => getenv('WX_APPID'),
             'component_access_token' => $result->data->token,
-        ], $result->errorMsg, );
+        ], $result->errorMsg);
     }
 
     // 获取小程序的授权帐号令牌 authorizer_access_token
@@ -47,7 +47,7 @@ class WechatCloudController extends Controller
 
         $result = json_decode($response->getBody()->getContents());
 
-        if ($response->getStatusCode() != HttpStatus::SUCCESS){
+        if ($response->getStatusCode() != HttpStatus::SUCCESS || $result->code != 0){
             return $this->errorJson($result->errorMsg);
         }
 
