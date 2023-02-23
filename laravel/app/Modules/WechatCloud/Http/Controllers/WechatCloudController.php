@@ -28,7 +28,8 @@ class WechatCloudController extends Controller
         if (!$data || $force){
             $data = $callback();
             if (is_array($data)){
-                Cache::put($key, $data, Carbon::now()->addSeconds($data['expires_in'])->addMinutes(-5));
+                // 缓存时长扣除5分钟，尽量避免过期token
+                Cache::put($key, $data, $data['expire_time'] - time() - 5 * 60);
             }
         }
 
@@ -77,7 +78,7 @@ class WechatCloudController extends Controller
         // 兼容微信的结构
         $data['access_token'] = $data['component_access_token'];
         $data['expires_in'] = $data['expire_time'] - time();
-        return $this->successJson($data, $result->errorMsg);
+        return $this->successJson($data, $result->errorMsg ?? 'ok');
     }
 
     // 获取小程序的授权帐号令牌 authorizer_access_token
@@ -122,6 +123,6 @@ class WechatCloudController extends Controller
         // 兼容微信的结构
         $data['access_token'] = $data['authorizer_access_token'];
         $data['expires_in'] = $data['expire_time'] - time();
-        return $this->successJson($data, $result->errorMsg);
+        return $this->successJson($data, $result->errorMsg ?? 'ok');
     }
 }
