@@ -9,5 +9,5 @@ nginx -g 'daemon off;' &
 # 运行`微信云托管`
 cd /wxcloudrun-wxcomponent
 ./main &
-redis-server
-# 设置redis的密码： --requirepass '123456'
+redis-server --requirepass '12345!@$'
+# 设置redis的密码 --requirepass '1!23~45@6'
