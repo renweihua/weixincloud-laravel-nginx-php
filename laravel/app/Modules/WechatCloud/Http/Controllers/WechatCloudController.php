@@ -130,7 +130,7 @@ class WechatCloudController extends Controller
     }
 
     // 进入授权页面
-    // https://wxcomponent-92561-30973-7-1316902866.sh.run.tcloudbase.com/wechatcloud/authorization?pre_auth_code=&space_id=
+    // /wechatcloud/authorization?pre_auth_code=&space_id=
     public function authorization(AuthorizationRequest $request)
     {
         $response = $this->getComponentAccessToken($request);
