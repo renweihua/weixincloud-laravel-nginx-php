@@ -41,7 +41,6 @@ class WechatCloudController extends Controller
     public function getComponentAccessToken(Request $request): JsonResponse
     {
         $result = [];
-        $force = $request->input('force', false);
         $data = $this->cache('get-component-access-token', function() use (&$result){
             $client = new \GuzzleHttp\Client([
                 'base_uri' => $this->server
@@ -72,7 +71,7 @@ class WechatCloudController extends Controller
                 'component_access_token' => $result->data->token,
                 'expire_time' => strtotime(Carbon::now()->addSeconds($expires_in)->toString())
             ];
-        }, $force);
+        });
         if (!is_array($data)){
             return $data;
         }
@@ -88,7 +87,6 @@ class WechatCloudController extends Controller
         $result = [];
         $app_id = $request->input('app_id');
 
-        $force = $request->input('force', false);
         $data = $this->cache('get-authorizer-access-token:by:' . $app_id, function() use ($app_id, &$result){
             $client = new \GuzzleHttp\Client([
                 'base_uri' => $this->server
@@ -119,7 +117,7 @@ class WechatCloudController extends Controller
                 'authorizer_access_token' => $result->data->token,
                 'expire_time' => strtotime(Carbon::now()->addSeconds($expires_in)->toString())
             ];
-        }, $force);
+        });
         if (!is_array($data)){
             return $data;
         }
