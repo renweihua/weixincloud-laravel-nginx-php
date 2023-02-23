@@ -51,10 +51,11 @@ class WechatCloudController extends Controller
             $result = json_decode($response->getBody()->getContents());
 
             if ($response->getStatusCode() != HttpStatus::SUCCESS || $result->code != 0){
-                return $this->errorJson($result->errorMsg, HttpStatus::BAD_REQUEST, [], [
+                $error = $result->errorMsg . ' => ' . $result->data;
+                return $this->errorJson($error, HttpStatus::BAD_REQUEST, [], [
                     // 兼容微信接口异常返回结构
                     'errcode' => $result->code,
-                    'errmsg' => $result->errorMsg
+                    'errmsg' => $error
                 ]);
             }
 
@@ -86,6 +87,7 @@ class WechatCloudController extends Controller
     {
         $result = [];
         $app_id = $request->input('app_id');
+
         $force = $request->input('force', false);
         $data = $this->cache('get-authorizer-access-token:by:' . $app_id, function() use ($app_id, &$result){
             $client = new \GuzzleHttp\Client([
@@ -96,10 +98,11 @@ class WechatCloudController extends Controller
             $result = json_decode($response->getBody()->getContents());
 
             if ($response->getStatusCode() != HttpStatus::SUCCESS || $result->code != 0){
-                return $this->errorJson($result->errorMsg, HttpStatus::BAD_REQUEST, [], [
+                $error = $result->errorMsg . ' => ' . $result->data;
+                return $this->errorJson($error, HttpStatus::BAD_REQUEST, [], [
                     // 兼容微信接口异常返回结构
                     'errcode' => $result->code,
-                    'errmsg' => $result->errorMsg
+                    'errmsg' => $error
                 ]);
             }
 
