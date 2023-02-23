@@ -155,6 +155,7 @@ class WechatCloudController extends Controller
         return view('wechatcloud::authorization', compact('callback_url'));
     }
 
+    // 授权回调
     public function callback($space_id, Request $request)
     {
         var_dump($space_id);
