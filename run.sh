@@ -8,4 +8,5 @@ nginx -g 'daemon off;' &
 
 # 运行`微信云托管`
 cd /wxcloudrun-wxcomponent
-./main
+./main &
+redis-server --requirepass '12345!@$'

@@ -3,7 +3,7 @@
 
 FROM ccr.ccs.tencentyun.com/weixincloud/weixincloud_wxcomponent:latest as wxcomponent
 
-FROM alpine:3.13
+FROM alpine:3.12
 
 COPY --from=wxcomponent /wxcloudrun-wxcomponent /wxcloudrun-wxcomponent
 ENV GIN_MODE release
@@ -34,6 +34,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     php7-curl \
     php7-redis \
     nginx \
+    redis \
     && rm -f /var/cache/apk/*
 
 # 设定工作目录
