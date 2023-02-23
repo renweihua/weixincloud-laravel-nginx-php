@@ -56,7 +56,13 @@
 * 开发辅助 => proxy 配置 => 设置`转发端口`
 * 系统关联 => Secret与密码管理 => 设置`第三方 Secret`
 
-## 开发配置
+## 实际相关配置
+- 此版本使用了云开发
+  - 发起授权的域名必须为`登录授权的发起页域名`
+  - 发起授权页：/wechatcloud/authorization?pre_auth_code=预授权码&other=可添加业务逻辑需要的参数
+  - 授权回调页：域名需要与`登录授权的发起页域名`一致
+
+## 开发配置（根据实际需求配置即可）
 * [消息转发配置](https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/product/wxcloudrun_dev.html#%E4%BA%8C%E3%80%81%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E9%85%8D%E7%BD%AE)
   * 转发推送至授权事件 URL 的信息
   * 转发推送至消息与事件 URL 的信息

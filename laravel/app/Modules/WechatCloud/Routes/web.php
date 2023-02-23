@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::prefix('wechatcloud')->group(function() {
-//     Route::get('/', 'WechatCloudController@index');
-// });
+Route::prefix('wechatcloud')->group(function() {
+    Route::get('/authorization', 'WechatCloudController@authorization');
+    Route::get('/{space_id}/callback', 'WechatCloudController@callback');
+});

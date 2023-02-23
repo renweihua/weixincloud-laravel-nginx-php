@@ -3,8 +3,10 @@
 namespace App\Modules\WechatCloud\Http\Controllers;
 
 use App\Constants\HttpStatus;
+use App\libs\WechatCloud\ThirdPartyPlatformServer;
 use App\Models\Wxtoken;
 use App\Modules\WechatCloud\Http\Requests\AppIdRequest;
+use App\Modules\WechatCloud\Http\Requests\AuthorizationRequest;
 use App\Traits\Json;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -125,5 +127,37 @@ class WechatCloudController extends Controller
         $data['access_token'] = $data['authorizer_access_token'];
         $data['expires_in'] = $data['expire_time'] - time();
         return $this->successJson($data, $result->errorMsg ?? 'ok');
+    }
+
+    // 进入授权页面
+    // https://wxcomponent-92561-30973-7-1316902866.sh.run.tcloudbase.com/wechatcloud/authorization?pre_auth_code=&space_id=
+    public function authorization(AuthorizationRequest $request)
+    {
+        $response = $this->getComponentAccessToken($request);
+        $result = $response->getData();
+        if ($result->http_status != HttpStatus::SUCCESS){
+            throw new \Exception($result->msg, HttpStatus::BAD_REQUEST);
+        }
+        $component_data = $result->data;
+
+        $thirdPartyPlatformServer = ThirdPartyPlatformServer::getInstance();
+
+        $space_id = $request->input('space_id');
+        // 预授权码通过参数传递（如果在此处获取，IP一直变动，白名单异常）
+        $pre_auth_code = $request->input('pre_auth_code');
+        $callback_url = $thirdPartyPlatformServer->getCallbackUrl(
+            $component_data->component_appid,
+            $pre_auth_code,
+            getenv('APP_URL') . '/wechatcloud/' . $space_id . '/callback'
+        );
+
+        // $callback_url = 'https://bbs.cnpscy.com';
+        return view('wechatcloud::authorization', compact('callback_url'));
+    }
+
+    public function callback($space_id, Request $request)
+    {
+        var_dump($space_id);
+        var_dump($request->all());
     }
 }
