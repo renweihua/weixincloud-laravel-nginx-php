@@ -21,13 +21,13 @@ class WechatCloudController extends Controller
     // 云管理服务的内网端口
     public $server = 'http://127.0.0.1:8081';
 
-    protected function cache($key, $callback, $force = false)
+    protected function cache($key, $callback, $forced_update = 0)
     {
         $lock_key = $key . ':lock';
         $lock = Cache::lock($lock_key, 10);
 
         $data = Cache::get($key);
-        if (!$data || $force){
+        if (!$data || $forced_update){
             $data = $callback();
             if (is_array($data)){
                 // 缓存时长扣除5分钟，尽量避免过期token
@@ -43,6 +43,7 @@ class WechatCloudController extends Controller
     public function getComponentAccessToken(Request $request): JsonResponse
     {
         $result = [];
+        $forced_update = $request->input('forced_update', 0);
         $data = $this->cache('get-component-access-token', function() use (&$result){
             $client = new \GuzzleHttp\Client([
                 'base_uri' => $this->server
@@ -71,9 +72,9 @@ class WechatCloudController extends Controller
             return [
                 'component_appid' => $component_appid,
                 'component_access_token' => $result->data->token,
-                'expire_time' => strtotime(Carbon::now()->addSeconds($expires_in)->toString())
+                'expire_time' => strtotime(Carbon::now()->addSeconds($expires_in)->toDateTimeString())
             ];
-        });
+        }, $forced_update);
         if (!is_array($data)){
             return $data;
         }
@@ -89,6 +90,7 @@ class WechatCloudController extends Controller
         $result = [];
         $app_id = $request->input('app_id');
 
+        $forced_update = $request->input('forced_update', 0);
         $data = $this->cache('get-authorizer-access-token:by:' . $app_id, function() use ($app_id, &$result){
             $client = new \GuzzleHttp\Client([
                 'base_uri' => $this->server
@@ -119,7 +121,7 @@ class WechatCloudController extends Controller
                 'authorizer_access_token' => $result->data->token,
                 'expire_time' => strtotime(Carbon::now()->addSeconds($expires_in)->toString())
             ];
-        });
+        }, $forced_update);
         if (!is_array($data)){
             return $data;
         }
@@ -148,6 +150,7 @@ class WechatCloudController extends Controller
         $callback_url = $thirdPartyPlatformServer->getCallbackUrl(
             $component_data->component_appid,
             $pre_auth_code,
+            // 可自定义回调链接（域名必须不可变动）
             getenv('APP_URL') . '/wechatcloud/' . $space_id . '/callback'
         );
 
