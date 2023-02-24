@@ -30,8 +30,8 @@ class WechatCloudController extends Controller
         if (!$data || $forced_update){
             $data = $callback();
             if (is_array($data)){
-                // 缓存时长扣除5分钟，尽量避免过期token
-                Cache::put($key, $data, $data['expire_time'] - time() - 5 * 60);
+                // 缓存时长扣除5-10分钟，尽量避免过期token
+                Cache::put($key, $data, $data['expire_time'] - time() - rand(5, 10) * 60);
             }
         }
 
@@ -68,7 +68,6 @@ class WechatCloudController extends Controller
             if ($wxtoken){
                 $expires_in = strtotime($wxtoken->updatetime) + $expires_in - time();
             }
-
             return [
                 'component_appid' => $component_appid,
                 'component_access_token' => $result->data->token,
