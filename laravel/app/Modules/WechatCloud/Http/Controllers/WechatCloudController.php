@@ -164,16 +164,25 @@ class WechatCloudController extends Controller
     public function callback($space_id, Request $request)
     {
         var_dump($space_id);
-        $params = $request->all();
-        var_dump($params);
+        var_dump($request->all());
         // 跳转到实际项目
         $redirect_url = Cache::get('space_redirect:' . $space_id);
-        $query = http_build_query($params);
-        if (strpos($redirect_url, '?') !== false) {
-            $redirect_url = $redirect_url . '&' . $query;
-        }else{
-            $redirect_url = $redirect_url . '?' . $query;
+        // 切不可使用`http_build_query`，`auth_code`会存在特殊符被转义
+        // 授权的code与过期时间
+        $params = $request->only(['auth_code', 'expires_in']);
+        $str = '';
+        foreach ($params as $key =>$value){
+            $str .= "&{$key}={$value}";
         }
-        header('location:' . $redirect_url);
+        $str = trim($str, '&');
+
+        if (strpos($redirect_url, '?') !== false) {
+            $redirect_url = $redirect_url . '&' . $str;
+        }else{
+            $redirect_url = $redirect_url . '?' . $str;
+        }
+        // header('location:' . $redirect_url);
+        var_dump($redirect_url);
+        return view('wechatcloud::callback', compact('redirect_url'));
     }
 }

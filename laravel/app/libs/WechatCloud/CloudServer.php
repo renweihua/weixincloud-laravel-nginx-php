@@ -50,4 +50,10 @@ class CloudServer
 
         return $result->data;
     }
+
+    // 获取云服务端的小程序授权链接
+    public function getAuthorizationUrl($pre_auth_code, $space_id, $redirect_url)
+    {
+        return self::CLOUD_SERVER_URL . "/wechatcloud/authorization?pre_auth_code={$pre_auth_code}&space_id={$space_id}&redirect_url={$redirect_url}";
+    }
 }
