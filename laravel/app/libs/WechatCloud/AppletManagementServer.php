@@ -36,12 +36,31 @@ class AppletManagementServer
         return $response;
     }
 
+    // 获取基本信息
+    // https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/miniprogram-management/basic-info-management/getAccountBasicInfo.html
+    public function getAccountBasicInfo($authorizer_access_token, &$error = '')
+    {
+        $result = false;
+        try{
+            $response = $this->client->post('/cgi-bin/account/getaccountbasicinfo?access_token=' . $authorizer_access_token);
+
+            // 验证是否存在异常
+            $result = json_decode($response->getBody()->getContents());
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
+                $error = $result->errmsg ?? $result->errcode;
+            }
+        }catch (\Exception $e){
+            $error = $e->getMessage();
+        }
+        return $result;
+    }
+
     // 设置第三方平台服务器域名
     public function modifyThirdpartyServerDomain($component_access_token, $action, $wxa_server_domain = '', $is_modify_published_together = false, &$error = '')
     {
         $result = false;
         try{
-            $response = $this->client->post('/cgi-bin/component/modify_wxa_server_domain?access_token=' . $component_access_token, [
+            $response = $this->client->post('/cgi-bin/component/modify_wxa_server_domain?authorizer_access_token=' . $component_access_token, [
                 'body' => json_encode([
                     'action' => $action,
                     'wxa_server_domain' => $wxa_server_domain,
@@ -51,7 +70,7 @@ class AppletManagementServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){
@@ -74,7 +93,7 @@ class AppletManagementServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){
@@ -97,7 +116,7 @@ class AppletManagementServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){
@@ -131,7 +150,7 @@ class AppletManagementServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){
@@ -155,7 +174,7 @@ class AppletManagementServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){
@@ -174,7 +193,7 @@ class AppletManagementServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){
@@ -193,7 +212,7 @@ class AppletManagementServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){
@@ -219,7 +238,7 @@ class AppletManagementServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){
@@ -242,7 +261,7 @@ class AppletManagementServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){
@@ -268,7 +287,7 @@ class AppletManagementServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){

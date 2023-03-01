@@ -38,7 +38,7 @@ class ThirdPartyPlatformServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){
@@ -78,8 +78,6 @@ class ThirdPartyPlatformServer
         $result = false;
         // 获取第三方平台的token与app_id
         try{
-            // $component_data = CloudServer::getInstance()->getComponentAccessToken();
-
             $response = $this->client->post('/cgi-bin/component/api_query_auth?component_access_token=' . $component_data->component_access_token, [
                 'body' => json_encode([
                     'component_appid' => $component_data->component_appid,
@@ -89,19 +87,12 @@ class ThirdPartyPlatformServer
 
             // 验证是否存在异常
             $result = json_decode($response->getBody()->getContents());
-            if (isset($result->errcode)){
+            if (isset($result->errcode) && $result->errcode != WechatCode::SUCCESS){
                 $error = $result->errmsg ?? $result->errcode;
             }
         }catch (\Exception $e){
             $error = $e->getMessage();
         }
-
-        // object(stdClass)#2094 (2) {
-        //     ["pre_auth_code"]=>
-        //   string(100) "preauthcode@@@blzWgoI6xZdn4fqdDH-5HsJfmTiiNrvGHeg22SZMxsmOMlGhCna5C7lgjhR1kTAY7wdyiOlq7Cab-zizPTyoVg"
-        //     ["expires_in"]=>
-        //   int(1800)
-        // }
         return $result;
     }
 }

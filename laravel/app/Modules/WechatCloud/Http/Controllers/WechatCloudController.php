@@ -163,8 +163,6 @@ class WechatCloudController extends Controller
     // 授权回调
     public function callback($space_id, Request $request)
     {
-        var_dump($space_id);
-        var_dump($request->all());
         // 跳转到实际项目
         $redirect_url = Cache::get('space_redirect:' . $space_id);
         // 切不可使用`http_build_query`，`auth_code`会存在特殊符被转义
@@ -181,8 +179,8 @@ class WechatCloudController extends Controller
         }else{
             $redirect_url = $redirect_url . '?' . $str;
         }
-        // header('location:' . $redirect_url);
-        var_dump($redirect_url);
+        header('location:' . $redirect_url);
+        return;
         return view('wechatcloud::callback', compact('redirect_url'));
     }
 }
