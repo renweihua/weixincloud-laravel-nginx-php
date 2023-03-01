@@ -131,7 +131,7 @@ class WechatCloudController extends Controller
     }
 
     // 进入授权页面
-    // /wechatcloud/authorization?pre_auth_code=&space_id=
+    // /wechatcloud/authorization?pre_auth_code=&space_id=&redirect_url
     public function authorization(AuthorizationRequest $request)
     {
         $response = $this->getComponentAccessToken($request);
@@ -144,6 +144,9 @@ class WechatCloudController extends Controller
         $thirdPartyPlatformServer = ThirdPartyPlatformServer::getInstance();
 
         $space_id = $request->input('space_id');
+
+        Cache::put('space_redirect:' . $space_id, $request->input('redirect_url'), Carbon::now()->addHours(1));
+
         // 预授权码通过参数传递（如果在此处获取，IP一直变动，白名单异常）
         $pre_auth_code = $request->input('pre_auth_code');
         $callback_url = $thirdPartyPlatformServer->getCallbackUrl(
@@ -161,6 +164,16 @@ class WechatCloudController extends Controller
     public function callback($space_id, Request $request)
     {
         var_dump($space_id);
-        var_dump($request->all());
+        $params = $request->all();
+        var_dump($params);
+        // 跳转到实际项目
+        $redirect_url = Cache::get('space_redirect:' . $space_id);
+        $query = http_build_query($params);
+        if (strpos($redirect_url, '?') !== false) {
+            $redirect_url = $redirect_url . '&' . $query;
+        }else{
+            $redirect_url = $redirect_url . '?' . $query;
+        }
+        header('location:' . $redirect_url);
     }
 }
