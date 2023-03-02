@@ -20,3 +20,8 @@ Route::prefix('wechatcloud')->group(function() {
     // 获取小程序的授权帐号令牌 authorizer_access_token
     Route::get('/get-authorizer-access-token', 'WechatCloudController@getAuthorizerAccessToken');
 });
+
+Route::prefix('wxacallback')->group(function() {
+    // 事件转发回调
+    Route::any('/event/{app_id}/callback', 'CallbackController@event');
+});
