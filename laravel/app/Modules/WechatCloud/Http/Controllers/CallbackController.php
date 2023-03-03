@@ -40,7 +40,7 @@ class CallbackController extends Controller
         $wx_xml['app_id'] = $app_id;
         // 避免抛出异常
         try{
-            $response = $client->post(self::EVENT_APPLET_CHECK_CALLBACK_URL, [
+            $client->post(self::EVENT_APPLET_CHECK_CALLBACK_URL, [
                 'form_params' => [
                     'wechat_xml' => $wx_xml,
                 ],

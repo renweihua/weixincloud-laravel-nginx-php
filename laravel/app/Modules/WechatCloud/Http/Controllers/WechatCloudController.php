@@ -145,7 +145,7 @@ class WechatCloudController extends Controller
 
         $space_id = $request->input('space_id');
 
-        Cache::put('space_redirect:' . $space_id, $request->input('redirect_url'), Carbon::now()->addHours(1));
+        Cache::put('space_redirect:' . $space_id, urldecode($request->input('redirect_url')), Carbon::now()->addHours(1));
 
         // 预授权码通过参数传递（如果在此处获取，IP一直变动，白名单异常）
         $pre_auth_code = $request->input('pre_auth_code');
