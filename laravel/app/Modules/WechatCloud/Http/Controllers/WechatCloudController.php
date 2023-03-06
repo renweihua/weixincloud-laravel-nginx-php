@@ -44,6 +44,8 @@ class WechatCloudController extends Controller
     {
         $result = [];
         $forced_update = $request->input('forced_update', 0);
+        // 关闭缓存
+        $forced_update = 1;
         $data = $this->cache('get-component-access-token', function() use (&$result){
             $client = new \GuzzleHttp\Client([
                 'base_uri' => $this->server
@@ -64,10 +66,10 @@ class WechatCloudController extends Controller
             // 获取Token的过期时间：数据表未存储默认的过期时间，那么根据`更新时间 + 2小时`计算
             $expires_in = 7200;
             $component_appid = getenv('WX_APPID');
-            $wxtoken = Wxtoken::where('appid', $component_appid)->first();
-            if ($wxtoken){
-                $expires_in = strtotime($wxtoken->updatetime) + $expires_in - time();
-            }
+            // $wxtoken = Wxtoken::where('appid', $component_appid)->first();
+            // if ($wxtoken){
+            //     $expires_in = strtotime($wxtoken->updatetime) + $expires_in - time();
+            // }
             return [
                 'component_appid' => $component_appid,
                 'component_access_token' => $result->data->token,
@@ -90,6 +92,8 @@ class WechatCloudController extends Controller
         $app_id = $request->input('app_id');
 
         $forced_update = $request->input('forced_update', 0);
+        // 关闭缓存
+        $forced_update = 1;
         $data = $this->cache('get-authorizer-access-token:by:' . $app_id, function() use ($app_id, &$result){
             $client = new \GuzzleHttp\Client([
                 'base_uri' => $this->server
@@ -110,10 +114,10 @@ class WechatCloudController extends Controller
             // 获取Token的过期时间：数据表未存储默认的过期时间，那么根据`更新时间 + 2小时`计算
             $expires_in = 7200;
             $component_appid = getenv('WX_APPID');
-            $wxtoken = Wxtoken::where('appid', $component_appid)->first();
-            if ($wxtoken){
-                $expires_in = strtotime($wxtoken->updatetime) + $expires_in - time();
-            }
+            // $wxtoken = Wxtoken::where('appid', $component_appid)->first();
+            // if ($wxtoken){
+            //     $expires_in = strtotime($wxtoken->updatetime) + $expires_in - time();
+            // }
 
             return [
                 'authorizer_appid' => $app_id,
