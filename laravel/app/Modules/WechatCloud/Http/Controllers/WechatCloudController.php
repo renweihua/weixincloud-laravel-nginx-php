@@ -46,7 +46,7 @@ class WechatCloudController extends Controller
         $forced_update = $request->input('forced_update', 0);
         // 关闭缓存
         $forced_update = 1;
-        $data = $this->cache('get-component-access-token', function() use (&$result){
+        // $data = $this->cache('get-component-access-token', function() use (&$result){
             $client = new \GuzzleHttp\Client([
                 'base_uri' => $this->server
             ]);
@@ -70,15 +70,15 @@ class WechatCloudController extends Controller
             // if ($wxtoken){
             //     $expires_in = strtotime($wxtoken->updatetime) + $expires_in - time();
             // }
-            return [
+            $data = [
                 'component_appid' => $component_appid,
                 'component_access_token' => $result->data->token,
                 'expire_time' => strtotime(Carbon::now()->addSeconds($expires_in)->toDateTimeString())
             ];
-        }, $forced_update);
-        if (!is_array($data)){
-            return $data;
-        }
+        // }, $forced_update);
+        // if (!is_array($data)){
+        //     return $data;
+        // }
         // 兼容微信的结构
         $data['access_token'] = $data['component_access_token'];
         $data['expires_in'] = $data['expire_time'] - time();
@@ -94,7 +94,7 @@ class WechatCloudController extends Controller
         $forced_update = $request->input('forced_update', 0);
         // 关闭缓存
         $forced_update = 1;
-        $data = $this->cache('get-authorizer-access-token:by:' . $app_id, function() use ($app_id, &$result){
+        // $data = $this->cache('get-authorizer-access-token:by:' . $app_id, function() use ($app_id, &$result){
             $client = new \GuzzleHttp\Client([
                 'base_uri' => $this->server
             ]);
@@ -119,15 +119,15 @@ class WechatCloudController extends Controller
             //     $expires_in = strtotime($wxtoken->updatetime) + $expires_in - time();
             // }
 
-            return [
+            $data = [
                 'authorizer_appid' => $app_id,
                 'authorizer_access_token' => $result->data->token,
                 'expire_time' => strtotime(Carbon::now()->addSeconds($expires_in)->toString())
             ];
-        }, $forced_update);
-        if (!is_array($data)){
-            return $data;
-        }
+        // }, $forced_update);
+        // if (!is_array($data)){
+        //     return $data;
+        // }
         // 兼容微信的结构
         $data['access_token'] = $data['authorizer_access_token'];
         $data['expires_in'] = $data['expire_time'] - time();
